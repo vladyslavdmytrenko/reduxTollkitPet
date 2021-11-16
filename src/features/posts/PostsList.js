@@ -2,11 +2,14 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { PostAuthor } from './PostAutor'
-
+import { TimeAgo } from './TimeAgo'
 export const PostsList = () => {
   const posts = useSelector((state) => state.posts)
+  const orderedPosts = posts
+    .slice()
+    .sort((a, b) => b.date.localeCompare(a.date))
 
-  const renderPost = posts.map((post) => (
+  const renderPost = orderedPosts.map((post) => (
     <article className="post-excerpt" key={post.id}>
       <h3>{post.title}</h3>
       <p className="post-content">{post.content.substring(0, 100)}</p>
@@ -14,6 +17,7 @@ export const PostsList = () => {
       <Link to={`posts/${post.id}`} className="button muted-button">
         Viwe post
       </Link>
+      <TimeAgo timestamp={post.date} />
     </article>
   ))
 

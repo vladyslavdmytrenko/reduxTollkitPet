@@ -1,15 +1,17 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import React from 'react'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+
+import { TimeAgo } from './TimeAgo'
 
 export const SinglePostPage = ({ match }) => {
-  const { postId } = match.params;
+  const { postId } = match.params
   const post = useSelector((state) =>
     state.posts.find((post) => post.id === postId)
-  );
+  )
 
   if (!post) {
-    return <h2>Not found</h2>;
+    return <h2>Not found</h2>
   }
 
   return (
@@ -20,7 +22,8 @@ export const SinglePostPage = ({ match }) => {
         <Link to={`/editPost/${post.id}`} className="button">
           Edit post
         </Link>
+        <TimeAgo timestamp={post.date} />
       </article>
     </section>
-  );
-};
+  )
+}
